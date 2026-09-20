@@ -225,10 +225,20 @@
     "is_custom": true
   },
   {
+    "id": "freeflow-publish",
+    "name": "freeflow-publish",
+    "path": "skills/freeflow/SKILL.md",
+    "desc": "Publish self-contained HTML artifacts (plans, layouts, mockups, idea boards, dashboards) to a self-hosted Cloudflare Worker via the dkraft-publish CLI, returning a live shareable URL.",
+    "category": "custom",
+    "is_auto": false,
+    "is_custom": true,
+    "repository": "https://github.com/dkritarth/FreeFlow"
+  },
+  {
     "id": "latex",
     "name": "latex",
     "path": "skills/latex/SKILL.md",
-    "desc": "|",
+    "desc": "Focused LaTeX utility for compile-error log triage, bibliography validation, and venue template setup. Identifies precise error source files and lines from engine logs.",
     "category": "custom",
     "is_auto": false,
     "is_custom": true
@@ -237,7 +247,7 @@
     "id": "llm-harness",
     "name": "llm-harness",
     "path": "skills/llm-harness/SKILL.md",
-    "desc": ">",
+    "desc": "Constructs an empirical evaluation suite for LLM components (prompts, tool chains, subagent workflows). Defines measurable assertions, test cases, and scoring metrics to benchmark accuracy.",
     "category": "custom",
     "is_auto": false,
     "is_custom": true
@@ -255,7 +265,7 @@
     "id": "math",
     "name": "math",
     "path": "skills/math/SKILL.md",
-    "desc": "|",
+    "desc": "Enforces structured mathematical proof formatting (Claim, Assumptions, Proof, Where Used) and runs symbolic and numeric verification on extracted sub-claims using SymPy.",
     "category": "custom",
     "is_auto": false,
     "is_custom": true
@@ -606,7 +616,7 @@
     "id": "orchestrate",
     "name": "orchestrate",
     "path": "skills/orchestrate/SKILL.md",
-    "desc": ">",
+    "desc": "Decomposes complex tasks into five provider-neutral difficulty tiers and routes subagents to the most cost-effective model. Supports Claude Code and OpenAI Codex mappings.",
     "category": "custom",
     "is_auto": false,
     "is_custom": true
@@ -615,7 +625,7 @@
     "id": "repo-wiki",
     "name": "repo-wiki",
     "path": "skills/repo-wiki/SKILL.md",
-    "desc": ">",
+    "desc": "Generates and synchronizes a GitHub wiki from project documentation, READMEs, CLAUDE.md, AGENTS.md, and codebase structure. Keeps documentation centralized and version-controlled.",
     "category": "custom",
     "is_auto": false,
     "is_custom": true
@@ -687,7 +697,7 @@
     "id": "writing",
     "name": "writing",
     "path": "skills/writing/SKILL.md",
-    "desc": "|",
+    "desc": "Track manuscript draft revisions across sessions. Maintains an append-only journal (.writing-journal.md) backed by git history to compare planned edits against actual changes, surface trajectory drift, and keep research drafts aligned.",
     "category": "custom",
     "is_auto": false,
     "is_custom": true

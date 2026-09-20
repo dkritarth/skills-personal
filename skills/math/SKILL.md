@@ -1,113 +1,62 @@
 ---
 name: math
-version: 0.1.0
-description: |
-  Proof structure enforcement (Claim -> Assumptions -> Proof -> Where used)
-  plus a real SymPy verification round-trip for symbolic and numeric
-  sub-claims extracted from a proof (equalities, inequalities), with
-  candidates for Lean formalization flagged, not forced. Use when reviewing
-  or drafting a proof or proof sketch and you want its algebraic sub-claims
-  actually checked, not just its prose structure tidied. Not for informal
-  arguments with no checkable symbolic content, and not a replacement for
-  Lean/Coq when a claim genuinely needs full formal verification — it flags
-  those cases rather than attempting them.
+version: 0.2.0
+description: Enforces structured mathematical proof formatting (Claim, Assumptions, Proof, Where Used) and runs symbolic and numeric verification on extracted sub-claims using SymPy.
 license: MIT
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
 disable-model-invocation: true
 ---
 
-# MATH
+# Math
 
-## Why this exists / not X, and the ship condition
+Mechanical proof verification and structural auditing for mathematical writeups.
 
-Per PLAN.md, MATH is only worth shipping as a distinct skill if it
-round-trips through an actual checker rather than templating proof rigor
-in prose — otherwise its remaining value (structure, exposition order)
-should fold into `latex` as a template. This skill clears that bar because
-`scripts/sympy_verify.py` performs a real verification pass: it parses
-`CLAIM` lines out of a proof, evaluates them with SymPy (symbolic proof
-where possible, numeric sampling with explicit counterexamples otherwise),
-and reports PASS/FAIL/UNVERIFIABLE per claim — see the script's PASS
-(proved) vs. PASS (numeric only) distinction, which is the honesty
-mechanism that keeps this from overclaiming rigor it didn't actually check.
-
-- **vs. `foogtil/claude-code-math-skills`, `morankor/theorist-toolbox`**
-  (`research/prior-art-research.md` §7): both enforce a
-  Proposition/Proof-style prose template with no checker behind it. MATH's
-  differentiator is specifically the SymPy round-trip; the structure
-  enforcement below is secondary value, not the reason this skill exists.
-- **If `sympy_verify.py` is ever removed** or the skill starts accepting
-  proofs with zero extractable `CLAIM` lines as "verified," this skill has
-  regressed to exactly the prior art it was scoped to differ from — fold it
-  back into `latex` per PLAN.md's ship condition rather than keep
-  maintaining it as a separate, undifferentiated skill.
+This skill extracts algebraic, numeric, and analytic sub-claims from proof drafts and checks them against SymPy to catch calculation bugs before submission.
 
 ## When to use
 
-- Reviewing or drafting a proof/proof sketch that contains algebraic,
-  trigonometric, or other SymPy-expressible sub-claims worth checking
-  mechanically (an expansion, an inequality bound, a trig identity used
-  mid-proof).
-- Auditing proof structure: does the writeup actually state its
-  assumptions before using them, and does it say where each claim gets
-  used downstream?
+- Reviewing proof drafts containing algebraic expansions, trigonometric identities, summations, matrix operations, or inequality bounds.
+- Checking that a proof states all necessary assumptions upfront rather than introducing unstated premises mid-argument.
 
 ## When not to use
 
-- Purely informal or philosophical arguments with no checkable symbolic
-  content — there's nothing for `sympy_verify.py` to do, and forcing
-  `CLAIM` extraction would be theater.
-- Full formal verification needs (a claim that's genuinely only trustworthy
-  after a Lean/Coq proof) — this skill flags such candidates (see below)
-  but does not attempt Lean formalization itself.
-- Prose clarity of the writeup — that's `academic-humanizer` via `writing`.
+- Informal or philosophical arguments with no checkable symbolic math.
+- Complete formal verification in interactive theorem provers (Lean, Coq, Isabelle). This skill flags candidates for formal proofs but does not generate Lean code.
+- General prose edits. Delegate to `academic-humanizer`.
 
-## Core loop
+## Process
 
-1. **Extract claims.** Read the proof/proof sketch and pull out any
-   sub-claim expressible as a SymPy equality or inequality — an expansion,
-   an identity, a bound — into the `CLAIM` syntax `scripts/sympy_verify.py`
-   understands:
+### 1. Extract claims
+Isolate mathematical assertions into a scratch file using the syntax expected by `scripts/sympy_verify.py`:
 
-   ```
-   CLAIM <id>: <lhs> <op> <rhs> [assuming <var><cmp><bound>, ...]
-   ```
+```text
+CLAIM <id>: <lhs> <op> <rhs> [assuming <var><cmp><bound>, ...]
+```
 
-   `<op>` is one of `== != >= <= > <`. Write extracted claims to a
-   scratch file (e.g. alongside the draft, not committed unless the user
-   wants a record) and run:
+Supported comparison operators: `==`, `!=`, `>=`, `<=`, `>`, `<`.
 
-   `scripts/sympy_verify.py <claims-file>`
+Example:
+```text
+CLAIM 1: (x + y)**2 == x**2 + 2*x*y + y**2
+CLAIM 2: exp(x) >= 1 + x assuming x > 0
+```
 
-2. **Read the verdicts precisely.** Four outcomes per claim:
-   - `PASS (proved)` — SymPy proved it symbolically (simplified to zero, or
-     an inequality solved exactly over the domain). Trust this.
-   - `PASS (numeric only)` — no symbolic proof found, but sampled points in
-     the domain all satisfied the claim. This is evidence, not proof —
-     say so to the user; don't report it as "verified" without the
-     qualifier.
-   - `FAIL` — a concrete counterexample was found; report the point and
-     value, not just "failed."
-   - `UNVERIFIABLE` — parsing/evaluation failed (SymPy couldn't handle the
-     expression). Don't silently drop the claim; tell the user it needs
-     manual review.
-3. **Enforce structure.** Independent of the verification pass, check the
-   writeup states, in order: **Claim** (what's being proved) → 
-   **Assumptions** (what's given/assumed, stated before use, not
-   introduced mid-proof) → **Proof** (the argument) → **Where used** (what
-   downstream result depends on this one, if any — omit only for
-   standalone lemmas). Flag missing or out-of-order sections rather than
-   silently reordering the user's writeup.
-4. **Flag (don't force) Lean candidates.** If a claim is a fully formal
-   statement over a standard decidable theory (arithmetic, real
-   inequalities, elementary algebra) and carries real weight in the
-   argument, note it as a Lean-formalization candidate — but do not attempt
-   the formalization; that's a deliberate scope boundary, not a TODO to
-   fill in silently.
+### 2. Run verification
+Execute the verification script:
 
-## Scripts
+```bash
+python3 scripts/sympy_verify.py path/to/claims.txt
+```
 
-- `scripts/sympy_verify.py <claims-file>` — requires `sympy`
-  (`pip install sympy`, a venv is recommended); exits with a clear error
-  rather than silently no-op'ing if it's missing. Deterministic numeric
-  sampling (fixed RNG seed) so re-runs on the same claims are reproducible.
+Interpret results:
+- `PASS (proved)`: Symbolically confirmed by SymPy over the specified domain.
+- `PASS (numeric only)`: Sampled points satisfied the condition, but no analytical proof was derived. Treat as supporting evidence, not strict formal proof.
+- `FAIL`: A counterexample was identified. Output the counterexample values immediately.
+- `UNVERIFIABLE`: Expression could not be evaluated by SymPy. Requires manual check.
+
+### 3. Verify proof structure
+Confirm that the proof follows standard sequential sections:
+1. **Claim**: Clear theorem, lemma, or proposition statement.
+2. **Assumptions**: Complete declaration of bounds, spaces, and initial conditions stated before the derivation begins.
+3. **Proof**: Step-by-step argument with explicit references to established theorems.
+4. **Where used**: Explicit mention of downstream theorems or application contexts relying on this lemma.

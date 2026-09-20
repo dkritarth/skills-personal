@@ -50,6 +50,12 @@
       "category": "agent-infra"
     },
     {
+      "name": "freeflow",
+      "description": "Publish self-contained HTML plans, mockups, and idea boards to a self-hosted Cloudflare Worker via the dkraft-publish CLI. Repository: https://github.com/dkritarth/FreeFlow",
+      "source": "./skills/freeflow",
+      "category": "agent-infra"
+    },
+    {
       "name": "academic-humanizer",
       "description": "Imported skill: academic-humanizer.",
       "source": "./skills/academic-humanizer",

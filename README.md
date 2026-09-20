@@ -1,43 +1,22 @@
 # Personal Skills
 
-Personal skills for Kritarth Dandapat.
+Personal skills repository for Kritarth Dandapat.
 
 ## Core skills
 
-- **UNSLOP** — cut AI tells from any writing; enforce natural, direct prose.
-- **WRITING** — paper-writing skill that tracks modification history and
-  translates it into future intent of the work (i.e. remembers where a
-  draft is headed, not just its current state).
-- **LATEX** — highly fine-tuned LaTeX skill (venue templates, compile-error
-  log triage, bib hygiene).
-- **MATH** — proper structure for generating proofs and mathematical
-  conceptual understanding with SymPy verification.
+- **unslop**: Strip AI tells from writing and enforce natural, direct prose.
+- **writing**: Manuscript drafting assistant that tracks revision history and intent across editing sessions via `.writing-journal.md`.
+- **latex**: Compile-error log triage down to the line, BibTeX hygiene, and venue templates.
+- **math**: Proof structure auditing and automated SymPy claim verification.
 
-## Agent-infrastructure skills
+## Agent infrastructure skills
 
-Second track (see PLAN.md "Second track"):
-
-- **orchestrate** — five-tier, provider-neutral model routing for
-  subagents, with mappings for Anthropic (Fable orchestrates; Opus
-  deep-reasons; Sonnet implements; Haiku executes mechanical/bulk work) and
-  OpenAI Codex (gpt-5.1-codex-max/-codex/-codex-mini with reasoning-effort
-  settings), cross-provider routing via the codex/claude CLIs, and
-  escalation/demotion rules.
-- **repo-wiki** — generates a GitHub wiki from CLAUDE.md/README/docs with
-  source-commit staleness stamps, and makes it the first-read entry point
-  for exploring agents via pointers in both CLAUDE.md and AGENTS.md
-  (Claude Code and Codex respectively).
-- **llm-harness** — builds an eval harness (cases, graders, baseline
-  accuracy) around any LLM-dependent system so prompt changes are measured,
-  not vibes.
+- **freeflow**: Publish self-contained HTML plans, dashboards, and mockups to a self-hosted Cloudflare Worker via `dkraft-publish`. Project source: [FreeFlow](https://github.com/dkritarth/FreeFlow).
+- **orchestrate**: Five-tier provider-neutral task routing for subagents across Claude Code and OpenAI Codex.
+- **repo-wiki**: Distills repository documentation into a version-controlled GitHub wiki with freshness tracking.
+- **llm-harness**: Builds empirical benchmark test fixtures and evaluation suites for LLM prompts and pipelines.
 
 ## Status
 
-MVP built: `.claude-plugin/marketplace.json` plus skills implemented.
-Distribution model: a personal Claude Code plugin marketplace, following the
-existing `~/.claude/plugins/marketplaces/` pattern (like `caveman`), not
-standalone skill repos.
-
-See `PLAN.md` for the full concept: problem statement, decisions, skill
-specs, phased milestones, success criteria, and risks. See `AGENTS.md` and
-`CLAUDE.md` for how to build and test skills in this repo.
+Configured as a personal Claude Code plugin marketplace (`.claude-plugin/marketplace.json`).
+Online documentation is hosted via GitHub Pages at [http://dkritarth.com/skills-personal/](http://dkritarth.com/skills-personal/).

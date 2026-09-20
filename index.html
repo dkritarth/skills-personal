@@ -650,10 +650,16 @@
       bOrigin.textContent = skill.is_custom ? 'Custom' : 'Imported';
       modalBadges.appendChild(bOrigin);
 
+      let repoRow = "";
+      if (skill.repository) {
+        repoRow = `<div class="frontmatter-row"><span class="frontmatter-label">Project:</span> <a href="${escapeHtml(skill.repository)}" target="_blank" style="color: var(--text); text-decoration: underline; font-weight: 600;">${escapeHtml(skill.repository)} ↗</a></div>`;
+      }
+
       modalFrontmatter.innerHTML = `
         <div class="frontmatter-row"><span class="frontmatter-label">Path:</span> <code>${skill.path}</code></div>
         <div class="frontmatter-row"><span class="frontmatter-label">Status:</span> ${skill.is_auto ? 'Invoked automatically by agent' : 'Manual user invocation only (disable-model-invocation: true)'}</div>
         <div class="frontmatter-row"><span class="frontmatter-label">Origin:</span> ${skill.is_custom ? 'Authored by Kritarth Dandapat' : 'Imported / upstream skill'}</div>
+        ${repoRow}
       `;
 
       modalMarkdown.innerHTML = '<em>Loading SKILL.md content...</em>';
