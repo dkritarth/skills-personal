@@ -5,7 +5,7 @@ description: Convert documents (PDF, Word, Excel, PowerPoint, HTML, etc.) to mar
 license: MIT
 compatibility: claude-code codex morphmind opencode
 allowed-tools: [Read, Write, Edit, Bash]
-auto-invoke: ["\.pdf$", "\.docx?$", "\.xlsx?$", "\.pptx?$", "\.html?$"]
+auto-invoke: ['\.pdf$', '\.docx?$', '\.xlsx?$', '\.pptx?$', '\.html?$']
 ---
 
 # Markitdown Converter Skill
@@ -14,23 +14,57 @@ Automatically convert documents to markdown before reading them. Supports PDFs, 
 
 ## Setup
 
-Install markitdown (one-time):
+Requires Python 3.10+ and the `markitdown` package.
+
 ```bash
-pipx install markitdown
+pip install markitdown
 ```
 
-## Usage
+Optional dependencies for specific formats:
+- **Audio transcription**: `pip install "markitdown[audio]"` (requires ffmpeg)
+- **YouTube transcription**: `pip install "markitdown[youtube]"`
+- **Office formats (doc, ppt)**: LibreOffice (system package)
 
-Convert a file:
+## How It Works
+
+When any tool needs to inspect a binary document format (PDF, DOCX, XLSX, PPTX, HTML):
+
+1. Instead of reading raw bytes, run `markitdown` via the conversion script
+2. The script outputs clean markdown to stdout or a cached `.md` file alongside the original
+3. Read the markdown output using the standard Read tool
+4. Do not commit generated markdown files unless explicitly asked
+
+## Conversion Script
+
+Use `scripts/convert.py` to convert files:
+
 ```bash
-python ~/.claude/skills/markitdown-converter/converter.py <file-path>
+# Convert to stdout
+python3 scripts/convert.py path/to/document.pdf
+
+# Convert to file (defaults to <name>.converted.md alongside source)
+python3 scripts/convert.py path/to/document.docx -o output.md
+
+# Convert with LLM-enhanced image descriptions (requires OPENAI_API_KEY)
+python3 scripts/convert.py path/to/slides.pptx --use-llm
 ```
 
-Or use the markitdown CLI directly:
-```bash
-markitdown file.pdf > file.md
-```
+## Supported Formats
 
-## Supported formats
+| Extension | Format | Engine |
+|-----------|--------|--------|
+| `.pdf` | PDF documents | pdfminer.six |
+| `.docx`, `.doc` | Word documents | python-docx / LibreOffice |
+| `.xlsx`, `.xls` | Excel spreadsheets | openpyxl / xlrd |
+| `.pptx`, `.ppt` | PowerPoint slides | python-pptx / LibreOffice |
+| `.html`, `.htm` | Web pages | BeautifulSoup4 |
+| `.csv`, `.tsv` | Tabular data | pandas |
+| `.json`, `.xml` | Structured data | built-in parsers |
+| `.zip` | Archives | extracts and converts contents |
+| `.mp3`, `.wav` | Audio (speech-to-text) | speech_recognition |
 
-PDF, Word, Excel, PowerPoint, HTML, JSON, CSV, and more. See converter.py for full list.
+## Best Practices
+
+- **Large PDFs**: If a PDF is > 50 pages, convert specific page ranges if supported, or grep the converted markdown rather than reading the whole file into context.
+- **Spreadsheets**: MarkItDown formats sheets as markdown tables. Very wide tables may wrap awkwardly; consider querying specific columns or rows if needed.
+- **Images in documents**: By default, embedded images produce placeholder text. Pass `--use-llm` if image contents (diagrams, charts) are essential to the task.
