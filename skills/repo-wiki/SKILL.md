@@ -14,6 +14,7 @@ description: >
   replacement for CLAUDE.md/AGENTS.md — the wiki extends them, the pointer
   stays in-repo.
 allowed-tools: Read, Grep, Glob, Bash, Write, Edit
+disable-model-invocation: true
 ---
 
 # Repo-wiki — generate and maintain a GitHub wiki from repo docs

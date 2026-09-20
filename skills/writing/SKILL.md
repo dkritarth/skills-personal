@@ -14,6 +14,7 @@ description: |
   track.
 license: MIT
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob, AskUserQuestion]
+disable-model-invocation: true
 ---
 
 # WRITING

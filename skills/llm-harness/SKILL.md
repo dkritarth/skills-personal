@@ -13,6 +13,7 @@ description: >
   instead), or when success is genuinely unmeasurable prose taste with no
   reference answers — a harness needs a gradeable criterion.
 allowed-tools: Read, Grep, Glob, Bash, Write, Edit
+disable-model-invocation: true
 ---
 
 # LLM-harness — build eval harnesses for LLM-dependent systems

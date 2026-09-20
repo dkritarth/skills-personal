@@ -13,6 +13,7 @@ description: |
   those cases rather than attempting them.
 license: MIT
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
+disable-model-invocation: true
 ---
 
 # MATH

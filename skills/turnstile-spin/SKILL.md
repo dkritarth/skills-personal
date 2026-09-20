@@ -8,6 +8,7 @@ references:
   - astro
   - sveltekit
   - hugo
+disable-model-invocation: true
 ---
 
 # Turnstile Spin skill

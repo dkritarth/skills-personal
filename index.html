@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Skills | Kritarth Dandapat</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #000000;
+      --border: #000000;
+      --subtle: #666666;
+      --card-bg: #fafafa;
+      --tag-bg: #000000;
+      --tag-text: #ffffff;
+      --tag-alt-bg: #eeeeee;
+      --tag-alt-text: #000000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --text: #ffffff;
+        --border: #ffffff;
+        --subtle: #999999;
+        --card-bg: #111111;
+        --tag-bg: #ffffff;
+        --tag-text: #000000;
+        --tag-alt-bg: #222222;
+        --tag-alt-text: #ffffff;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, monospace;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2.5rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--subtle);
+      margin-bottom: 0.75rem;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .meta-bar a {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .search-box:focus {
+      outline: 2px solid var(--border);
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .count {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--subtle);
+      font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-card {
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .skill-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+
+    .badge-group {
+      display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      white-space: nowrap;
+    }
+
+    .badge-auto {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+    }
+
+    .badge-manual {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .badge-custom {
+      background: var(--tag-alt-bg);
+      color: var(--tag-alt-text);
+      border: 1px solid var(--border);
+    }
+
+    .badge-imported {
+      color: var(--subtle);
+      border: 1px dashed var(--subtle);
+    }
+
+    .skill-desc {
+      font-size: 0.85rem;
+      color: var(--subtle);
+      line-height: 1.4;
+      margin-top: 0.25rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--subtle);
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Personal Skills</h1>
+    <div class="subtitle">Curated agent skills environment for Kritarth Dandapat</div>
+    <div class="meta-bar">
+      <span>Repo: <a href="https://github.com/dkritarth/skills-personal" target="_blank">dkritarth/skills-personal</a></span>
+      <span>Total Tracked Skills: <strong id="total-count">0</strong></span>
+      <span>Invocation: <strong>Agent-Invoked vs Manual Only</strong></span>
+    </div>
+  </header>
+
+  <input type="text" id="search" class="search-box" placeholder="Filter by name, tag (e.g. 'custom', 'auto', 'manual'), or keywords...">
+
+  <!-- Section 1: Active Agent-Invoked Skills -->
+  <section id="section-auto">
+    <h2>1. Agent-Invoked Skills <span class="count">(Always active background assistants)</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card" data-tags="auto imported writing useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">unslop</span>
+            <div class="badge-group">
+              <span class="badge badge-auto">Agent-Invoked</span>
+              <span class="badge badge-imported">Cursor</span>
+            </div>
+          </div>
+          <p class="skill-desc">Strips AI prose tells, repetitive phrasing, hollow jargon, and filler from writing. Enforces direct, concrete voice.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="auto imported debugging engineering useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">diagnosing-bugs</span>
+            <div class="badge-group">
+              <span class="badge badge-auto">Agent-Invoked</span>
+              <span class="badge badge-imported">Matt Pocock</span>
+            </div>
+          </div>
+          <p class="skill-desc">Rigorous diagnosis loop for hard bugs and performance regressions via tight automated pass/fail feedback loops.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="auto imported tooling useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">markitdown-converter</span>
+            <div class="badge-group">
+              <span class="badge badge-auto">Agent-Invoked</span>
+              <span class="badge badge-imported">Imported</span>
+            </div>
+          </div>
+          <p class="skill-desc">Converts documents (PDF, Word, Excel, PowerPoint, HTML) to clean Markdown via Microsoft MarkItDown.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Custom Skills -->
+  <section id="section-custom">
+    <h2>2. Custom Skills <span class="count">(Authored by Kritarth Dandapat)</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card" data-tags="manual custom writing academic useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">writing</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-custom">Custom</span>
+            </div>
+          </div>
+          <p class="skill-desc">Flagship paper-writing skill tracking draft modification history and forward trajectory via a git-backed journal.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual custom latex writing useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">latex</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-custom">Custom</span>
+            </div>
+          </div>
+          <p class="skill-desc">Venue templates, compile-log error triage pointing at exact offending lines, and bibliography hygiene.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual custom math proofs useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">math</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-custom">Custom</span>
+            </div>
+          </div>
+          <p class="skill-desc">Proof structure enforcement (claim/assumptions/proof) and SymPy symbolic/numeric verification round-trip.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual custom infra agents">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">orchestrate</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-custom">Custom</span>
+            </div>
+          </div>
+          <p class="skill-desc">5-tier provider-neutral model routing for subagents across Anthropic and OpenAI Codex with escalation rules.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual custom infra docs">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">repo-wiki</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-custom">Custom</span>
+            </div>
+          </div>
+          <p class="skill-desc">Generates a GitHub wiki from markdown documentation and repo scan with source-commit staleness tracking.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual custom testing evals">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">llm-harness</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-custom">Custom</span>
+            </div>
+          </div>
+          <p class="skill-desc">Builds evaluation harness with test cases, baseline scoring, and automated graders around LLM systems.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: High-Utility Engineering & Academic Skills -->
+  <section id="section-high-utility">
+    <h2>3. General & Engineering Skills <span class="count">(Matt Pocock & Academic Imports)</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card" data-tags="manual imported engineering useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">tdd</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Matt Pocock</span>
+            </div>
+          </div>
+          <p class="skill-desc">Test-driven development workflow: write failing test, verify failure mode, write minimal code to pass.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported engineering useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">code-review</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Matt Pocock</span>
+            </div>
+          </div>
+          <p class="skill-desc">Reviews changes since a git commit or branch base along simplicity, bug risks, and test coverage.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported engineering">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">codebase-design</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Matt Pocock</span>
+            </div>
+          </div>
+          <p class="skill-desc">Designing deep modules with simple interfaces and rich hidden implementations.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported academic writing useful">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">research-paper-writing</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Master-cai</span>
+            </div>
+          </div>
+          <p class="skill-desc">Guidance for writing and structuring machine learning, CV, and NLP academic conference papers.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported academic writing">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">academic-humanizer</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Imported</span>
+            </div>
+          </div>
+          <p class="skill-desc">Refines academic text into clear scholarly voice without losing technical precision.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported engineering">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">research</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Matt Pocock</span>
+            </div>
+          </div>
+          <p class="skill-desc">Investigate technical questions against primary sources and capture structured findings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Specialized / On-Demand Skills -->
+  <section id="section-niche">
+    <h2>4. Specialized & On-Demand Skills <span class="count">(Cloudflare & Anthropic Suites)</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card" data-tags="manual imported cloudflare">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">cloudflare</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Cloudflare</span>
+            </div>
+          </div>
+          <p class="skill-desc">Comprehensive Workers, Pages, KV, D1, R2, Queues, and Workers AI tooling.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported cloudflare">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">durable-objects</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Cloudflare</span>
+            </div>
+          </div>
+          <p class="skill-desc">Building and debugging stateful coordination, storage, and WebSocket Durable Objects.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported cloudflare">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">cloudflare-email-service</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Cloudflare</span>
+            </div>
+          </div>
+          <p class="skill-desc">Sending and receiving transactional emails with Cloudflare Email Routing & Sending.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported cloudflare">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">cloudflare-one</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Cloudflare</span>
+            </div>
+          </div>
+          <p class="skill-desc">Zero Trust access policies, WARP tunnels, and secure edge gateway configurations.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported tooling documents">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">docx / xlsx / pdf / pptx</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Anthropic</span>
+            </div>
+          </div>
+          <p class="skill-desc">Document processing suite for inspecting, generating, and modifying office formats.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" data-tags="manual imported tooling">
+        <div>
+          <div class="skill-header">
+            <span class="skill-name">mcp-builder</span>
+            <div class="badge-group">
+              <span class="badge badge-manual">Manual</span>
+              <span class="badge badge-imported">Anthropic</span>
+            </div>
+          </div>
+          <p class="skill-desc">Guide for developing and testing Model Context Protocol (MCP) servers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Personal skills documentation &bull; Kritarth Dandapat</span>
+    <span>Host: GitHub Pages</span>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById('search');
+    const cards = document.querySelectorAll('.skill-card');
+    const totalCountEl = document.getElementById('total-count');
+
+    totalCountEl.textContent = cards.length;
+
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        if (text.includes(q) || tags.includes(q)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -15,6 +15,7 @@ description: >
   NOT use to bypass an explicit model or provider choice the user already
   made.
 allowed-tools: Agent, Read, Grep, Glob, Bash
+disable-model-invocation: true
 ---
 
 # Orchestrate — model-tier task routing

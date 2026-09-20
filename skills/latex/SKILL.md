@@ -13,6 +13,7 @@ description: |
   don't ask this skill to teach LaTeX from scratch.
 license: MIT
 allowed-tools: [Read, Write, Edit, Bash, Grep, Glob]
+disable-model-invocation: true
 ---
 
 # LATEX
