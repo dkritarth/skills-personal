@@ -4,31 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Skills | Kritarth Dandapat</title>
+  <script src="vendor/marked.min.js"></script>
   <style>
     :root {
       --bg: #ffffff;
-      --text: #000000;
+      --text: #111111;
       --border: #000000;
-      --subtle: #666666;
+      --subtle: #555555;
       --card-bg: #fafafa;
-      --tag-bg: #000000;
-      --tag-text: #ffffff;
-      --tag-alt-bg: #eeeeee;
-      --tag-alt-text: #000000;
+      --card-hover: #f0f0f0;
+      --code-bg: #eeeeee;
+      --tag-auto-bg: #000000;
+      --tag-auto-text: #ffffff;
+      --tag-custom-bg: #e4e4e4;
+      --tag-custom-text: #000000;
+      --modal-overlay: rgba(0, 0, 0, 0.65);
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #000000;
-        --text: #ffffff;
-        --border: #ffffff;
-        --subtle: #999999;
-        --card-bg: #111111;
-        --tag-bg: #ffffff;
-        --tag-text: #000000;
-        --tag-alt-bg: #222222;
-        --tag-alt-text: #ffffff;
-      }
+    [data-theme="dark"] {
+      --bg: #0a0a0a;
+      --text: #f0f0f0;
+      --border: #ffffff;
+      --subtle: #999999;
+      --card-bg: #141414;
+      --card-hover: #202020;
+      --code-bg: #1c1c1c;
+      --tag-auto-bg: #ffffff;
+      --tag-auto-text: #000000;
+      --tag-custom-bg: #2a2a2a;
+      --tag-custom-text: #ffffff;
+      --modal-overlay: rgba(0, 0, 0, 0.85);
     }
 
     * {
@@ -38,27 +43,36 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, monospace;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.5;
       padding: 2.5rem 1.5rem;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
+      transition: background-color 0.15s ease, color 0.15s ease;
     }
 
     header {
       border-bottom: 2px solid var(--border);
       padding-bottom: 1.5rem;
       margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .header-left {
+      flex: 1;
     }
 
     h1 {
       font-size: 1.8rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: -0.03em;
-      margin-bottom: 0.25rem;
       text-transform: uppercase;
+      margin-bottom: 0.25rem;
     }
 
     .subtitle {
@@ -70,8 +84,8 @@
     .meta-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
-      font-size: 0.85rem;
+      gap: 1.25rem;
+      font-size: 0.82rem;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
 
@@ -80,15 +94,41 @@
       text-decoration: underline;
     }
 
+    /* Theme button */
+    .theme-toggle {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      padding: 0.45rem 0.85rem;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.1s ease;
+      white-space: nowrap;
+    }
+
+    .theme-toggle:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .search-container {
+      margin-bottom: 2rem;
+    }
+
     .search-box {
       width: 100%;
-      padding: 0.6rem 0.8rem;
+      padding: 0.65rem 0.9rem;
       border: 1px solid var(--border);
       background: var(--bg);
       color: var(--text);
       font-family: inherit;
       font-size: 0.9rem;
-      margin-bottom: 2rem;
     }
 
     .search-box:focus {
@@ -112,8 +152,8 @@
       align-items: baseline;
     }
 
-    .count {
-      font-size: 0.8rem;
+    .section-note {
+      font-size: 0.75rem;
       font-weight: 400;
       color: var(--subtle);
       font-family: ui-monospace, SFMono-Regular, monospace;
@@ -121,7 +161,7 @@
 
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1rem;
     }
 
@@ -132,6 +172,15 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease, box-shadow 0.1s ease;
+      user-select: none;
+    }
+
+    .skill-card:hover {
+      background: var(--card-hover);
+      box-shadow: 3px 3px 0 var(--border);
+      transform: translate(-2px, -2px);
     }
 
     .skill-header {
@@ -146,6 +195,7 @@
       font-size: 0.95rem;
       font-weight: 700;
       font-family: ui-monospace, SFMono-Regular, monospace;
+      word-break: break-word;
     }
 
     .badge-group {
@@ -166,8 +216,8 @@
     }
 
     .badge-auto {
-      background: var(--tag-bg);
-      color: var(--tag-text);
+      background: var(--tag-auto-bg);
+      color: var(--tag-auto-text);
     }
 
     .badge-manual {
@@ -177,8 +227,8 @@
     }
 
     .badge-custom {
-      background: var(--tag-alt-bg);
-      color: var(--tag-alt-text);
+      background: var(--tag-custom-bg);
+      color: var(--tag-custom-text);
       border: 1px solid var(--border);
     }
 
@@ -194,9 +244,204 @@
       margin-top: 0.25rem;
     }
 
+    .click-hint {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.72rem;
+      color: var(--subtle);
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      text-decoration: underline;
+    }
+
+    /* Modal / Reader Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--modal-overlay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 1000;
+      backdrop-filter: blur(2px);
+    }
+
+    .modal-overlay[hidden] {
+      display: none !important;
+    }
+
+    .modal-dialog {
+      background: var(--bg);
+      color: var(--text);
+      border: 2px solid var(--border);
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 6px 6px 0 var(--border);
+    }
+
+    .modal-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .modal-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn-action {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.1s ease;
+    }
+
+    .btn-action:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+
+    /* Markdown styling inside reader */
+    .markdown-content h1,
+    .markdown-content h2,
+    .markdown-content h3,
+    .markdown-content h4 {
+      margin-top: 1.4rem;
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--subtle);
+      padding-bottom: 0.3rem;
+    }
+
+    .markdown-content h1 { font-size: 1.4rem; }
+    .markdown-content h2 { font-size: 1.2rem; }
+    .markdown-content h3 { font-size: 1.05rem; border-bottom: none; }
+
+    .markdown-content p,
+    .markdown-content ul,
+    .markdown-content ol,
+    .markdown-content pre,
+    .markdown-content table,
+    .markdown-content blockquote {
+      margin-bottom: 1rem;
+    }
+
+    .markdown-content ul,
+    .markdown-content ol {
+      padding-left: 1.5rem;
+    }
+
+    .markdown-content li {
+      margin-bottom: 0.25rem;
+    }
+
+    .markdown-content code {
+      background: var(--code-bg);
+      color: var(--text);
+      padding: 0.15rem 0.35rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.85em;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+    }
+
+    .markdown-content pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      overflow-x: auto;
+    }
+
+    .markdown-content pre code {
+      background: transparent;
+      padding: 0;
+      border: none;
+      font-size: 0.85rem;
+    }
+
+    .markdown-content blockquote {
+      border-left: 3px solid var(--border);
+      padding-left: 1rem;
+      color: var(--subtle);
+      font-style: italic;
+    }
+
+    .markdown-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+
+    .markdown-content th,
+    .markdown-content td {
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+
+    .markdown-content th {
+      background: var(--code-bg);
+      font-weight: 700;
+    }
+
+    .frontmatter-box {
+      border: 1px solid var(--border);
+      background: var(--code-bg);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 0.8rem;
+    }
+
+    .frontmatter-row {
+      display: flex;
+      margin-bottom: 0.25rem;
+      gap: 0.5rem;
+    }
+
+    .frontmatter-label {
+      font-weight: 700;
+      min-width: 110px;
+    }
+
     footer {
       border-top: 1px solid var(--border);
       padding-top: 1rem;
+      margin-top: 3rem;
       font-size: 0.8rem;
       color: var(--subtle);
       font-family: ui-monospace, SFMono-Regular, monospace;
@@ -210,338 +455,334 @@
 <body>
 
   <header>
-    <h1>Personal Skills</h1>
-    <div class="subtitle">Curated agent skills environment for Kritarth Dandapat</div>
-    <div class="meta-bar">
-      <span>Repo: <a href="https://github.com/dkritarth/skills-personal" target="_blank">dkritarth/skills-personal</a></span>
-      <span>Total Tracked Skills: <strong id="total-count">0</strong></span>
-      <span>Invocation: <strong>Agent-Invoked vs Manual Only</strong></span>
+    <div class="header-left">
+      <h1>Personal Skills</h1>
+      <div class="subtitle">Personal agent skills environment for Kritarth Dandapat</div>
+      <div class="meta-bar">
+        <span>Repo: <a href="https://github.com/dkritarth/skills-personal" target="_blank">dkritarth/skills-personal</a></span>
+        <span>Total Tracked Skills: <strong id="total-count">0</strong></span>
+        <span>Click any card to read Markdown</span>
+      </div>
+    </div>
+    <div>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+        <span id="theme-icon">◐</span> <span id="theme-label">Theme</span>
+      </button>
     </div>
   </header>
 
-  <input type="text" id="search" class="search-box" placeholder="Filter by name, tag (e.g. 'custom', 'auto', 'manual'), or keywords...">
+  <div class="search-container">
+    <input type="text" id="search" class="search-box" placeholder="Filter by name, tag (e.g. 'custom', 'auto', 'manual'), or keywords...">
+  </div>
 
   <!-- Section 1: Active Agent-Invoked Skills -->
   <section id="section-auto">
-    <h2>1. Agent-Invoked Skills <span class="count">(Always active background assistants)</span></h2>
-    <div class="skills-grid">
-      <div class="skill-card" data-tags="auto imported writing useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">unslop</span>
-            <div class="badge-group">
-              <span class="badge badge-auto">Agent-Invoked</span>
-              <span class="badge badge-imported">Cursor</span>
-            </div>
-          </div>
-          <p class="skill-desc">Strips AI prose tells, repetitive phrasing, hollow jargon, and filler from writing. Enforces direct, concrete voice.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="auto imported debugging engineering useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">diagnosing-bugs</span>
-            <div class="badge-group">
-              <span class="badge badge-auto">Agent-Invoked</span>
-              <span class="badge badge-imported">Matt Pocock</span>
-            </div>
-          </div>
-          <p class="skill-desc">Rigorous diagnosis loop for hard bugs and performance regressions via tight automated pass/fail feedback loops.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="auto imported tooling useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">markitdown-converter</span>
-            <div class="badge-group">
-              <span class="badge badge-auto">Agent-Invoked</span>
-              <span class="badge badge-imported">Imported</span>
-            </div>
-          </div>
-          <p class="skill-desc">Converts documents (PDF, Word, Excel, PowerPoint, HTML) to clean Markdown via Microsoft MarkItDown.</p>
-        </div>
-      </div>
-    </div>
+    <h2>1. Agent-Invoked Skills <span class="section-note">(Always active in background)</span></h2>
+    <div class="skills-grid" id="grid-auto"></div>
   </section>
 
   <!-- Section 2: Custom Skills -->
   <section id="section-custom">
-    <h2>2. Custom Skills <span class="count">(Authored by Kritarth Dandapat)</span></h2>
-    <div class="skills-grid">
-      <div class="skill-card" data-tags="manual custom writing academic useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">writing</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-custom">Custom</span>
-            </div>
-          </div>
-          <p class="skill-desc">Flagship paper-writing skill tracking draft modification history and forward trajectory via a git-backed journal.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual custom latex writing useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">latex</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-custom">Custom</span>
-            </div>
-          </div>
-          <p class="skill-desc">Venue templates, compile-log error triage pointing at exact offending lines, and bibliography hygiene.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual custom math proofs useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">math</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-custom">Custom</span>
-            </div>
-          </div>
-          <p class="skill-desc">Proof structure enforcement (claim/assumptions/proof) and SymPy symbolic/numeric verification round-trip.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual custom infra agents">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">orchestrate</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-custom">Custom</span>
-            </div>
-          </div>
-          <p class="skill-desc">5-tier provider-neutral model routing for subagents across Anthropic and OpenAI Codex with escalation rules.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual custom infra docs">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">repo-wiki</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-custom">Custom</span>
-            </div>
-          </div>
-          <p class="skill-desc">Generates a GitHub wiki from markdown documentation and repo scan with source-commit staleness tracking.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual custom testing evals">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">llm-harness</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-custom">Custom</span>
-            </div>
-          </div>
-          <p class="skill-desc">Builds evaluation harness with test cases, baseline scoring, and automated graders around LLM systems.</p>
-        </div>
-      </div>
-    </div>
+    <h2>2. Custom Skills <span class="section-note">(Authored by Kritarth Dandapat)</span></h2>
+    <div class="skills-grid" id="grid-custom"></div>
   </section>
 
   <!-- Section 3: High-Utility Engineering & Academic Skills -->
-  <section id="section-high-utility">
-    <h2>3. General & Engineering Skills <span class="count">(Matt Pocock & Academic Imports)</span></h2>
-    <div class="skills-grid">
-      <div class="skill-card" data-tags="manual imported engineering useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">tdd</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Matt Pocock</span>
-            </div>
-          </div>
-          <p class="skill-desc">Test-driven development workflow: write failing test, verify failure mode, write minimal code to pass.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported engineering useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">code-review</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Matt Pocock</span>
-            </div>
-          </div>
-          <p class="skill-desc">Reviews changes since a git commit or branch base along simplicity, bug risks, and test coverage.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported engineering">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">codebase-design</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Matt Pocock</span>
-            </div>
-          </div>
-          <p class="skill-desc">Designing deep modules with simple interfaces and rich hidden implementations.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported academic writing useful">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">research-paper-writing</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Master-cai</span>
-            </div>
-          </div>
-          <p class="skill-desc">Guidance for writing and structuring machine learning, CV, and NLP academic conference papers.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported academic writing">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">academic-humanizer</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Imported</span>
-            </div>
-          </div>
-          <p class="skill-desc">Refines academic text into clear scholarly voice without losing technical precision.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported engineering">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">research</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Matt Pocock</span>
-            </div>
-          </div>
-          <p class="skill-desc">Investigate technical questions against primary sources and capture structured findings.</p>
-        </div>
-      </div>
-    </div>
+  <section id="section-engineering">
+    <h2>3. General & Engineering Skills <span class="section-note">(Matt Pocock & Academic Imports)</span></h2>
+    <div class="skills-grid" id="grid-engineering"></div>
   </section>
 
-  <!-- Section 4: Specialized / On-Demand Skills -->
-  <section id="section-niche">
-    <h2>4. Specialized & On-Demand Skills <span class="count">(Cloudflare & Anthropic Suites)</span></h2>
-    <div class="skills-grid">
-      <div class="skill-card" data-tags="manual imported cloudflare">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">cloudflare</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Cloudflare</span>
-            </div>
-          </div>
-          <p class="skill-desc">Comprehensive Workers, Pages, KV, D1, R2, Queues, and Workers AI tooling.</p>
+  <!-- Section 4: Specialized & On-Demand Suites -->
+  <section id="section-specialized">
+    <h2>4. Specialized & On-Demand Skills <span class="section-note">(Cloudflare & Anthropic Suites)</span></h2>
+    <div class="skills-grid" id="grid-specialized"></div>
+  </section>
+
+  <!-- Modal Reader Overlay -->
+  <div id="modal-reader" class="modal-overlay" hidden>
+    <div class="modal-dialog" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span id="modal-skill-name" class="modal-title">Skill</span>
+          <span id="modal-badges" class="badge-group"></span>
+        </div>
+        <div class="modal-actions">
+          <button id="btn-copy" class="btn-action" type="button">Copy Markdown</button>
+          <button id="btn-close" class="btn-action" type="button">Close [ESC]</button>
         </div>
       </div>
-
-      <div class="skill-card" data-tags="manual imported cloudflare">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">durable-objects</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Cloudflare</span>
-            </div>
-          </div>
-          <p class="skill-desc">Building and debugging stateful coordination, storage, and WebSocket Durable Objects.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported cloudflare">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">cloudflare-email-service</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Cloudflare</span>
-            </div>
-          </div>
-          <p class="skill-desc">Sending and receiving transactional emails with Cloudflare Email Routing & Sending.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported cloudflare">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">cloudflare-one</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Cloudflare</span>
-            </div>
-          </div>
-          <p class="skill-desc">Zero Trust access policies, WARP tunnels, and secure edge gateway configurations.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported tooling documents">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">docx / xlsx / pdf / pptx</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Anthropic</span>
-            </div>
-          </div>
-          <p class="skill-desc">Document processing suite for inspecting, generating, and modifying office formats.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" data-tags="manual imported tooling">
-        <div>
-          <div class="skill-header">
-            <span class="skill-name">mcp-builder</span>
-            <div class="badge-group">
-              <span class="badge badge-manual">Manual</span>
-              <span class="badge badge-imported">Anthropic</span>
-            </div>
-          </div>
-          <p class="skill-desc">Guide for developing and testing Model Context Protocol (MCP) servers.</p>
-        </div>
+      <div class="modal-body">
+        <div id="modal-frontmatter" class="frontmatter-box"></div>
+        <div id="modal-markdown" class="markdown-content"></div>
       </div>
     </div>
-  </section>
+  </div>
 
   <footer>
     <span>Personal skills documentation &bull; Kritarth Dandapat</span>
-    <span>Host: GitHub Pages</span>
+    <span>Hosted via GitHub Pages</span>
   </footer>
 
   <script>
+    // State
+    let skillsData = [];
+    let currentRawMarkdown = '';
+
+    // Theme Management
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeLabel = document.getElementById('theme-label');
+    const rootEl = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        rootEl.setAttribute('data-theme', 'dark');
+        themeLabel.textContent = 'Light Mode';
+      } else {
+        rootEl.removeAttribute('data-theme');
+        themeLabel.textContent = 'Dark Mode';
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 
+      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const current = rootEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Create Card Element
+    function createSkillCard(skill) {
+      const card = document.createElement('div');
+      card.className = 'skill-card';
+      card.setAttribute('data-id', skill.id);
+      
+      const tags = [
+        skill.is_auto ? 'auto' : 'manual',
+        skill.is_custom ? 'custom' : 'imported',
+        skill.category,
+        skill.name,
+        skill.desc
+      ].join(' ').toLowerCase();
+      card.setAttribute('data-tags', tags);
+
+      const header = document.createElement('div');
+      header.className = 'skill-header';
+
+      const name = document.createElement('span');
+      name.className = 'skill-name';
+      name.textContent = skill.name;
+
+      const badgeGroup = document.createElement('div');
+      badgeGroup.className = 'badge-group';
+
+      if (skill.is_auto) {
+        const b = document.createElement('span');
+        b.className = 'badge badge-auto';
+        b.textContent = 'Agent-Invoked';
+        badgeGroup.appendChild(b);
+      } else {
+        const b = document.createElement('span');
+        b.className = 'badge badge-manual';
+        b.textContent = 'Manual';
+        badgeGroup.appendChild(b);
+      }
+
+      if (skill.is_custom) {
+        const b = document.createElement('span');
+        b.className = 'badge badge-custom';
+        b.textContent = 'Custom';
+        badgeGroup.appendChild(b);
+      } else {
+        const b = document.createElement('span');
+        b.className = 'badge badge-imported';
+        b.textContent = 'Imported';
+        badgeGroup.appendChild(b);
+      }
+
+      header.appendChild(name);
+      header.appendChild(badgeGroup);
+
+      const desc = document.createElement('p');
+      desc.className = 'skill-desc';
+      desc.textContent = skill.desc || 'No description provided.';
+
+      const hint = document.createElement('span');
+      hint.className = 'click-hint';
+      hint.textContent = 'View SKILL.md →';
+
+      const topWrap = document.createElement('div');
+      topWrap.appendChild(header);
+      topWrap.appendChild(desc);
+
+      card.appendChild(topWrap);
+      card.appendChild(hint);
+
+      card.addEventListener('click', () => openSkillModal(skill));
+
+      return card;
+    }
+
+    // Modal / Reader
+    const modalReader = document.getElementById('modal-reader');
+    const modalSkillName = document.getElementById('modal-skill-name');
+    const modalBadges = document.getElementById('modal-badges');
+    const modalFrontmatter = document.getElementById('modal-frontmatter');
+    const modalMarkdown = document.getElementById('modal-markdown');
+    const btnClose = document.getElementById('btn-close');
+    const btnCopy = document.getElementById('btn-copy');
+
+    async function openSkillModal(skill) {
+      window.location.hash = skill.id;
+      modalSkillName.textContent = skill.name;
+      modalBadges.innerHTML = '';
+
+      const bMode = document.createElement('span');
+      bMode.className = 'badge ' + (skill.is_auto ? 'badge-auto' : 'badge-manual');
+      bMode.textContent = skill.is_auto ? 'Agent-Invoked' : 'Manual';
+      modalBadges.appendChild(bMode);
+
+      const bOrigin = document.createElement('span');
+      bOrigin.className = 'badge ' + (skill.is_custom ? 'badge-custom' : 'badge-imported');
+      bOrigin.textContent = skill.is_custom ? 'Custom' : 'Imported';
+      modalBadges.appendChild(bOrigin);
+
+      modalFrontmatter.innerHTML = `
+        <div class="frontmatter-row"><span class="frontmatter-label">Path:</span> <code>${skill.path}</code></div>
+        <div class="frontmatter-row"><span class="frontmatter-label">Status:</span> ${skill.is_auto ? 'Invoked automatically by agent' : 'Manual user invocation only (disable-model-invocation: true)'}</div>
+        <div class="frontmatter-row"><span class="frontmatter-label">Origin:</span> ${skill.is_custom ? 'Authored by Kritarth Dandapat' : 'Imported / upstream skill'}</div>
+      `;
+
+      modalMarkdown.innerHTML = '<em>Loading SKILL.md content...</em>';
+      modalReader.removeAttribute('hidden');
+
+      try {
+        const res = await fetch(skill.path);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const raw = await res.text();
+        currentRawMarkdown = raw;
+
+        // Parse frontmatter vs body
+        let body = raw;
+        const match = raw.match(/^---\n([\s\S]*?)\n---([\s\S]*)$/);
+        if (match) {
+          body = match[2].trim();
+        }
+
+        if (window.marked && window.marked.parse) {
+          modalMarkdown.innerHTML = window.marked.parse(body);
+        } else {
+          modalMarkdown.innerHTML = '<pre>' + escapeHtml(body) + '</pre>';
+        }
+      } catch (err) {
+        modalMarkdown.innerHTML = `<p style="color: var(--subtle);">Could not load markdown directly: ${escapeHtml(err.message)}.</p><p><a href="${escapeHtml(skill.path)}" target="_blank" style="color: var(--text); text-decoration: underline;">Open raw file</a></p>`;
+      }
+    }
+
+    function closeModal() {
+      modalReader.setAttribute('hidden', '');
+      if (window.location.hash) {
+        history.replaceState(null, null, ' ');
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+
+    btnClose.addEventListener('click', closeModal);
+    modalReader.addEventListener('click', (e) => {
+      if (e.target === modalReader) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modalReader.hasAttribute('hidden')) {
+        closeModal();
+      }
+    });
+
+    btnCopy.addEventListener('click', () => {
+      if (currentRawMarkdown) {
+        navigator.clipboard.writeText(currentRawMarkdown).then(() => {
+          const orig = btnCopy.textContent;
+          btnCopy.textContent = 'Copied!';
+          setTimeout(() => { btnCopy.textContent = orig; }, 1500);
+        });
+      }
+    });
+
+    // Populate Grids
+    async function loadSkills() {
+      try {
+        const res = await fetch('skills-data.json');
+        skillsData = await res.json();
+      } catch (e) {
+        console.error('Could not load skills-data.json', e);
+        return;
+      }
+
+      document.getElementById('total-count').textContent = skillsData.length;
+
+      const gridAuto = document.getElementById('grid-auto');
+      const gridCustom = document.getElementById('grid-custom');
+      const gridEngineering = document.getElementById('grid-engineering');
+      const gridSpecialized = document.getElementById('grid-specialized');
+
+      skillsData.forEach(skill => {
+        const card = createSkillCard(skill);
+        if (skill.category === 'auto') {
+          gridAuto.appendChild(card);
+        } else if (skill.category === 'custom') {
+          gridCustom.appendChild(card);
+        } else if (skill.category === 'engineering') {
+          gridEngineering.appendChild(card);
+        } else {
+          gridSpecialized.appendChild(card);
+        }
+      });
+
+      // Handle direct hash navigation
+      if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const found = skillsData.find(s => s.id === targetId);
+        if (found) openSkillModal(found);
+      }
+    }
+
+    // Live search filter
     const searchInput = document.getElementById('search');
-    const cards = document.querySelectorAll('.skill-card');
-    const totalCountEl = document.getElementById('total-count');
-
-    totalCountEl.textContent = cards.length;
-
     searchInput.addEventListener('input', (e) => {
       const q = e.target.value.toLowerCase().trim();
-      cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
+      const allCards = document.querySelectorAll('.skill-card');
+      let visible = 0;
+
+      allCards.forEach(card => {
         const tags = (card.getAttribute('data-tags') || '').toLowerCase();
-        if (text.includes(q) || tags.includes(q)) {
+        if (tags.includes(q)) {
           card.style.display = '';
+          visible++;
         } else {
           card.style.display = 'none';
         }
       });
+
+      // Hide section headings if all cards inside are hidden
+      document.querySelectorAll('section').forEach(sec => {
+        const cards = sec.querySelectorAll('.skill-card');
+        const anyVisible = Array.from(cards).some(c => c.style.display !== 'none');
+        sec.style.display = anyVisible ? '' : 'none';
+      });
+
+      document.getElementById('total-count').textContent = visible;
     });
+
+    // Initialize
+    loadSkills();
   </script>
 </body>
 </html>
