@@ -33,7 +33,7 @@
     },
     {
       "name": "orchestrate",
-      "description": "Routes subagent workflows across provider-neutral reasoning tiers and models from Anthropic (Opus, Sonnet with thinking budgets) and OpenAI (o3, o3-mini with reasoning effort levels) to match compute to task complexity.",
+      "description": "Routes subagent workflows across provider-neutral reasoning tiers using OpenAI (GPT-6 Astra, GPT-5.6 Sol, GPT-5.6 Luna) and Anthropic (Opus 5, Sonnet 5, Fable 5.1) with calibrated reasoning budgets.",
       "source": "./skills/orchestrate",
       "category": "agent-infra"
     },

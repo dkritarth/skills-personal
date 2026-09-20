@@ -1,62 +1,62 @@
 ---
 name: orchestrate
-version: 0.3.0
-description: Routes subagent workflows across provider-neutral reasoning tiers and models from Anthropic and OpenAI. Matches tasks to reasoning budgets (high, medium, low, minimal) to prevent token waste and ensure reliable execution.
+version: 1.0.0
+description: Routes subagent workflows across provider-neutral reasoning tiers and frontier models from Anthropic (Opus 5, Sonnet 5, Fable 5.1) and OpenAI (GPT-6 Astra, GPT-5.6 Sol, GPT-5.6 Luna). Matches tasks to calibrated reasoning budgets to eliminate token waste and guarantee execution reliability.
 allowed-tools: [Agent, Read, Grep, Glob, Bash]
 disable-model-invocation: true
 ---
 
 # Orchestrate
 
-Task decomposition and reasoning-budget routing for subagent workflows.
+Task decomposition and reasoning-budget routing for multi-agent workflows.
 
-Rather than running every subagent on maximum compute or inheriting session defaults indiscriminately, this skill breaks tasks into discrete units, classifies each by required reasoning depth, and dispatches subagents with calibrated thinking budgets.
+Rather than running every subagent on maximum frontier compute or defaulting blindly to session inheritance, this skill breaks complex tasks into delegable sub-tasks, classifies each by required reasoning depth, and routes to appropriate models with calibrated thinking levels.
 
-## Reasoning tiers
+## The five reasoning tiers
 
-Classify every delegable sub-task into one tier before spawning an agent:
+Classify every delegable unit of work into one tier before spawning an agent:
 
-| Tier | Purpose | Scope and characteristics | Target reasoning depth |
-|------|---------|---------------------------|------------------------|
-| 0 | Orchestration & Synthesis | Task decomposition, drafting subagent specs, parallel execution planning, reconciling conflicting outputs, final integration. Always runs in the primary session. | High |
-| 1 | Deep Reasoning & Architecture | System boundary design, multi-system concurrency, cryptographic protocols, complex algorithmic optimization, subtle state-machine bugs, security audits. | Maximum / Extended |
-| 2 | Standard Implementation | Bounded feature development with clear specs, localized refactoring, writing unit and integration tests, reviewing pull requests against documented standards. | Medium / Balanced |
-| 3 | Mechanical Execution | Type annotations, linting fixes, file renames, applying an established pattern across known files, template instantiation where the diff is specified in the prompt. | Low / Fast |
-| 4 | Bulk Retrieval & Extraction | Large file tree grepping, call-graph tracing, structured JSON data extraction from documentation, log filtering, wide document scans. | Minimal / Raw Speed |
+| Tier | Purpose | Target scope and characteristics | Reasoning depth |
+|------|---------|----------------------------------|-----------------|
+| 0 | Orchestration & Synthesis | Task decomposition, drafting subagent specs, parallel planning, synthesizing conflicting diffs, final integration. Always runs in the primary session. | Extended / Maximum |
+| 1 | Deep Reasoning & Architecture | System boundary design, multi-process concurrency, cryptographic protocols, complex optimization, subtle state-machine bugs, security audits. | Maximum / High |
+| 2 | Standard Implementation | Bounded feature development against defined specs, localized refactoring, writing unit and integration tests, code reviews against documented conventions. | Medium / Balanced |
+| 3 | Mechanical Execution | Type annotations, lint fixes, renaming symbols, boilerplate replication, applying established patterns across known files. | Low / Fast |
+| 4 | Bulk Retrieval & Extraction | Tree grepping, call-graph tracing, structured JSON extraction from documentation, log filtering, wide repository scans. | Minimal / Raw Speed |
 
-## Model and reasoning configuration
+## Provider and model routing
 
-### Anthropic tier mapping
+### OpenAI mapping
 
-Anthropic models leverage configurable thinking budgets (extended thinking). Adjust the thinking budget to match task complexity:
+Routes across the GPT-6 (`gpt-6-astra`) and GPT-5.6 (`gpt-5.6-sol`, `gpt-5.6-luna`) generations using calibrated `reasoning_effort`:
 
-| Tier | Model | Thinking configuration | Guidance |
-|------|-------|------------------------|----------|
-| 0 | Primary Session Model | High thinking | Coordinates workflow and synthesizes results. Do not spawn as a background subagent. |
-| 1 | Opus / Sonnet | Extended thinking (16k to 32k tokens) | Provide full context and explicit correctness bounds. Allow the model room to explore edge cases before generating code. |
-| 2 | Sonnet | Medium thinking (4k to 8k tokens) | Standard workhorse for features and test suites. Balances thorough planning with fast generation. |
-| 3 | Sonnet | Low thinking (1k to 2k tokens) | Restrict prompt to the specific target file and the exact pattern to replicate. Fast turnaround. |
-| 4 | Sonnet | Minimal or off (0 to 1k tokens) | Optimize for throughput and token economy. Ideal for scanning multiple files and returning structured summaries. |
+| Tier | Model | Reasoning effort | Guidance & operational role |
+|------|-------|------------------|-----------------------------|
+| 0 | Astra (`gpt-6-astra`) | `xhigh` / `high` | Master orchestrator. Manages overall context, coordinates multi-hour workflows, evaluates subagent outputs, and maintains end-to-end task coherence. |
+| 1 | Astra / Sol (`gpt-5.6-sol`) | `high` | Frontier reasoning engine for complex mathematical logic, deep architectural refactors, and elusive race conditions. |
+| 2 | Sol (`gpt-5.6-sol`) | `medium` | The core software engineering workhorse. Implements multi-file features, writes regression suites, and refactors components against specifications. |
+| 3 | Luna (`gpt-5.6-luna`) | `low` | High-speed, lightweight execution. Applies localized fixes, handles repetitive boilerplate, and transforms established code patterns quickly. |
+| 4 | Luna (`gpt-5.6-luna`) | `minimal` | Instantaneous batch processing, fan-out file searching, tabular data extraction, and log parsing without speculative overhead. |
 
-### OpenAI tier mapping
+### Anthropic mapping
 
-OpenAI reasoning models utilize the `reasoning_effort` parameter (`high`, `medium`, `low`, `minimal`):
+Routes across Claude 5 models (Fable 5.1, Opus 5, Sonnet 5) with explicit adaptive thinking budgets:
 
-| Tier | Model | Reasoning effort | Guidance |
-|------|-------|------------------|----------|
-| 0 | Primary Session Model | `high` | Retains full planning state and evaluates subagent completions. |
-| 1 | o3 / o1 | `high` | Solves hard algorithmic problems, architectural trade-offs, and root-cause debugging. |
-| 2 | o3 / o3-mini | `medium` | Standard multi-file code editing, bug fixes with clear reproduction cases, and test authoring. |
-| 3 | o3-mini | `low` | Rapid mechanical edits, boilerplate translation, and predictable refactors. |
-| 4 | o3-mini | `minimal` | High-throughput queries, codebase indexing, and tabular data extraction. |
+| Tier | Model | Thinking budget | Guidance & operational role |
+|------|-------|-----------------|-----------------------------|
+| 0 | Fable 5.1 / Opus 5 | Extended (32k+ tokens) | Primary session orchestrator. Directs workflow execution, reconciles disparate subagent findings, and owns top-level architectural integrity. |
+| 1 | Opus 5 | Extended (16k to 32k tokens) | Frontier reasoning specialist. Solves root-cause debugging, formal specifications, and security audits before generating edits. |
+| 2 | Sonnet 5 | Medium (4k to 8k tokens) | Standard engineering workhorse. Delivers near-frontier code generation and test authoring with fast turnaround and efficient token spend. |
+| 3 | Sonnet 5 | Low (1k to 2k tokens) | Quick mechanical refactoring, pattern replication across files, and localized changes against rigid prompts. |
+| 4 | Sonnet 5 | Minimal / Off (0 to 1k tokens) | Maximum throughput for tree walks, syntax audits, and rapid summary generation. |
 
 ## Dispatch rules
 
-1. **Keep subagent context tight**: Do not dump the entire workspace into subagent prompts. Pass only the relevant file paths, the specific task description, and a testable completion check.
-2. **Serial vs parallel dispatch**:
-   - Tiers 3 and 4 support concurrent fan-out (for example, analyzing five modules across five parallel workers).
-   - Tier 1 must run serially when subsequent architecture depends on its decisions.
+1. **Keep subagent prompts focused**: Never pass the entire workspace context. Provide only the relevant file paths, target interfaces, expected outputs, and explicit verification criteria.
+2. **Serial vs parallel fan-out**:
+   - Tiers 3 and 4 (Luna, Sonnet 5 low/minimal) support parallel fan-out (such as analyzing separate modules concurrently across multiple workers).
+   - Tier 1 (Astra, Opus 5) must run serially when architectural foundations dictate subsequent tasks.
 3. **Escalation protocol**:
-   - If a Tier 2 subagent fails a test loop twice on unexpected edge cases, escalate the task to Tier 1 with the test failure log attached.
-   - Do not re-run a failed Tier 3 task on Tier 3 without changing prompt specificity; if the task was more ambiguous than anticipated, promote it to Tier 2.
-4. **Provider consistency**: Use a single provider family within an integrated task pipeline to avoid conflicting tool conventions and formatting drift.
+   - If a Tier 2 task fails two successive test validation passes due to unforeseen design ambiguities, escalate immediately to Tier 1 with full failure logs.
+   - If a Tier 3 mechanical edit reveals hidden dependencies or structural variance, promote it to Tier 2 instead of looping.
+4. **Maintain provider consistency**: Stick to one provider family within an active task graph to avoid tool signature discrepancies and formatting divergence.

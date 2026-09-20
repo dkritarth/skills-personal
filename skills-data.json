@@ -616,7 +616,7 @@
     "id": "orchestrate",
     "name": "orchestrate",
     "path": "skills/orchestrate/SKILL.md",
-    "desc": "Routes subagent workflows across provider-neutral reasoning tiers and models from Anthropic and OpenAI. Matches tasks to reasoning budgets (high, medium, low, minimal) to prevent token waste and ensure reliable execution.",
+    "desc": "Routes subagent workflows across provider-neutral reasoning tiers and frontier models from Anthropic (Opus 5, Sonnet 5, Fable 5.1) and OpenAI (GPT-6 Astra, GPT-5.6 Sol, GPT-5.6 Luna). Matches tasks to calibrated reasoning budgets to eliminate token waste and guarantee execution reliability.",
     "category": "custom",
     "is_auto": false,
     "is_custom": true
