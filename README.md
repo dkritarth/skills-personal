@@ -12,7 +12,7 @@ Personal skills repository for Kritarth Dandapat.
 ## Agent infrastructure skills
 
 - **freeflow**: Publish self-contained HTML plans, dashboards, and mockups to a self-hosted Cloudflare Worker via `dkraft-publish`. Project source: [FreeFlow](https://github.com/dkritarth/FreeFlow).
-- **orchestrate**: Five-tier provider-neutral task routing for subagents across Claude Code and OpenAI Codex.
+- **orchestrate**: Five-tier provider-neutral task routing matching subagents to calibrated reasoning budgets (Opus/Sonnet thinking tokens, o3/o3-mini reasoning effort).
 - **repo-wiki**: Distills repository documentation into a version-controlled GitHub wiki with freshness tracking.
 - **llm-harness**: Builds empirical benchmark test fixtures and evaluation suites for LLM prompts and pipelines.
 

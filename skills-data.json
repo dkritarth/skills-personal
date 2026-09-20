@@ -616,7 +616,7 @@
     "id": "orchestrate",
     "name": "orchestrate",
     "path": "skills/orchestrate/SKILL.md",
-    "desc": "Decomposes complex tasks into five provider-neutral difficulty tiers and routes subagents to the most cost-effective model. Supports Claude Code and OpenAI Codex mappings.",
+    "desc": "Routes subagent workflows across provider-neutral reasoning tiers and models from Anthropic and OpenAI. Matches tasks to reasoning budgets (high, medium, low, minimal) to prevent token waste and ensure reliable execution.",
     "category": "custom",
     "is_auto": false,
     "is_custom": true

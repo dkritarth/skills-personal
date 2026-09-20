@@ -33,7 +33,7 @@
     },
     {
       "name": "orchestrate",
-      "description": "Model-routing orchestration: classifies each unit of work into one of five provider-neutral difficulty tiers and spawns subagents on the cheapest model that handles that tier reliably. Ships Anthropic (Fable orchestrates, Opus deep-reasons, Sonnet implements, Haiku executes mechanical/bulk work) and OpenAI Codex (gpt-5.1-codex-max/-codex/-codex-mini with reasoning-effort settings) mappings, cross-provider routing via the codex/claude CLIs, and explicit escalation/demotion rules.",
+      "description": "Routes subagent workflows across provider-neutral reasoning tiers and models from Anthropic (Opus, Sonnet with thinking budgets) and OpenAI (o3, o3-mini with reasoning effort levels) to match compute to task complexity.",
       "source": "./skills/orchestrate",
       "category": "agent-infra"
     },
