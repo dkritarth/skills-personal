@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "skills-marketplace",
-  "description": "Personal marketplace of fine-tuned skills for paper writing, LaTeX, and verified math proofs.",
+  "name": "skills-personal",
+  "description": "Personal skills for Kritarth Dandapat.",
   "owner": {
     "name": "Kritarth Dandapat",
     "email": "dkritarth@gmail.com"
@@ -11,6 +11,12 @@
       "name": "writing",
       "description": "Paper-writing skill that tracks a draft's modification history across sessions via a per-draft journal file backed by git, and infers the draft's forward trajectory (not just past diffs). The flagship skill in this marketplace.",
       "source": "./skills/writing",
+      "category": "writing"
+    },
+    {
+      "name": "unslop",
+      "description": "Cut AI tells from any writing. Must always apply.",
+      "source": "./skills/unslop",
       "category": "writing"
     },
     {
