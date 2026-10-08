@@ -33,7 +33,7 @@
     },
     {
       "name": "orchestrate",
-      "description": "Routes subagent workflows across provider-neutral reasoning tiers using OpenAI (GPT-6 Astra, GPT-5.6 Sol, GPT-5.6 Luna) and Anthropic (Opus 5, Sonnet 5, Fable 5.1) with calibrated reasoning budgets.",
+      "description": "T3 Code routing with Opus 5.5 coordination, GPT-6.1 Sol implementation, GPT-6 Luna routine work, Gemini 3.8 Flash High research, and ChatGPT - KD account priority.",
       "source": "./skills/orchestrate",
       "category": "agent-infra"
     },

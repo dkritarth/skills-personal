@@ -12,7 +12,7 @@ Personal skills repository for Kritarth Dandapat.
 ## Agent infrastructure skills
 
 - **freeflow**: Publish self-contained HTML plans, dashboards, and mockups to a self-hosted Cloudflare Worker via `dkraft-publish`. Project source: [FreeFlow](https://github.com/dkritarth/FreeFlow).
-- **orchestrate**: Five-tier provider-neutral task routing for OpenAI (GPT-6 Astra, GPT-5.6 Sol, GPT-5.6 Luna) and Anthropic (Opus 5, Sonnet 5, Fable 5.1) with calibrated reasoning budgets.
+- **orchestrate**: T3 Code routing with Opus 5.5 coordination, GPT-6.1 Sol implementation, GPT-6 Luna routine work, Gemini 3.8 Flash High research, and ChatGPT - KD account priority.
 - **repo-wiki**: Distills repository documentation into a version-controlled GitHub wiki with freshness tracking.
 - **llm-harness**: Builds empirical benchmark test fixtures and evaluation suites for LLM prompts and pipelines.
 
