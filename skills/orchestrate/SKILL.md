@@ -1,6 +1,6 @@
 ---
 name: orchestrate
-version: 2.0.0
+version: 2.0.1
 description: Route T3 Code agent workflows using Kritarth's account priority, model limits, and reasoning preferences. Use for delegation or complex workflow coordination; routine tasks need no Opus consultation.
 allowed-tools: [Agent, Read, Grep, Glob, Bash, "mcp__t3_code__*"]
 disable-model-invocation: true
@@ -38,11 +38,11 @@ routes:
   implementation:
     provider: gpt_accounts
     model: gpt-6.1-sol
-    options: {reasoningEffort: medium}
+    options: {reasoningEffort: medium} # High is also permitted when useful.
   routine:
     provider: gpt_accounts
     model: gpt-6-luna
-    options: {reasoningEffort: medium} # High is also permitted when useful.
+    options: {reasoningEffort: high} # Always high.
   research:
     providerInstanceIds: [antigravity, antigravity_2]
     model: gemini-3.8-flash-high
