@@ -701,5 +701,14 @@
     "category": "custom",
     "is_auto": false,
     "is_custom": true
+  },
+  {
+    "id": "msu-dminer-fleet",
+    "name": "msu-dminer-fleet",
+    "path": "skills/msu-dminer-fleet/SKILL.md",
+    "desc": "Access MSU Dminer, DECS, ICER HPCC, and NCSA Delta; notify the human through the question tool for password/Duo login, reuse SSH connections, and run experiments through tmux and Slurm.",
+    "category": "engineering",
+    "is_auto": false,
+    "is_custom": true
   }
 ]

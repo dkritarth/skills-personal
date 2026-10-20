@@ -11,6 +11,8 @@ Personal skills repository for Kritarth Dandapat.
 
 ## Agent infrastructure skills
 
+- **msu-dminer-fleet**: MSU machine access and NCSA Delta human login handoff, with question-tool notifications, SSH connection sharing, tmux, and Slurm experiments. Maintained in [the fleet repository](https://github.com/dkritarth/msu-research-compute-fleet), with a self-contained snapshot here.
+
 - **freeflow**: Publish self-contained HTML plans, dashboards, and mockups to a self-hosted Cloudflare Worker via `dkraft-publish`. Project source: [FreeFlow](https://github.com/dkritarth/FreeFlow).
 - **orchestrate**: T3 Code routing with Opus 5.5 coordination, GPT-6.1 Sol implementation, GPT-6 Luna routine work, Gemini 3.8 Flash High research, and ChatGPT - KD account priority.
 - **repo-wiki**: Distills repository documentation into a version-controlled GitHub wiki with freshness tracking.

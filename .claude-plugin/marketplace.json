@@ -223,6 +223,12 @@
       "description": "Imported skill: wrangler.",
       "source": "./skills/wrangler",
       "category": "imported"
+    },
+    {
+      "name": "msu-dminer-fleet",
+      "description": "Access MSU Dminer, DECS, ICER HPCC, and NCSA Delta; notify the human through the question tool for password/Duo login, reuse SSH connections, and run experiments through tmux and Slurm.",
+      "source": "./skills/msu-dminer-fleet",
+      "category": "development"
     }
   ]
 }
