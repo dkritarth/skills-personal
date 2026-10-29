@@ -229,6 +229,30 @@
       "description": "Access MSU Dminer, DECS, ICER HPCC, and NCSA Delta; notify the human through the question tool for password/Duo login, reuse SSH connections, and run experiments through tmux and Slurm.",
       "source": "./skills/msu-dminer-fleet",
       "category": "development"
+    },
+    {
+      "name": "file-pr",
+      "description": "Guidance for filing concise, well-reviewed pull requests.",
+      "source": "./skills/file-pr",
+      "category": "development"
+    },
+    {
+      "name": "council",
+      "description": "Coordinate independent multi-provider delegates for review and feedback.",
+      "source": "./skills/council",
+      "category": "development"
+    },
+    {
+      "name": "leaving-pr-comments",
+      "description": "Format and verify agent-authored GitHub pull request comments.",
+      "source": "./skills/leaving-pr-comments",
+      "category": "development"
+    },
+    {
+      "name": "technical-writing",
+      "description": "Write and review clear technical documentation using Diataxis, Google style, STE, and Global English rules.",
+      "source": "./skills/technical-writing",
+      "category": "writing"
     }
   ]
 }

@@ -22,3 +22,10 @@ Personal skills repository for Kritarth Dandapat.
 
 Configured as a personal Claude Code plugin marketplace (`.claude-plugin/marketplace.json`).
 Online documentation is hosted via GitHub Pages at [http://dkritarth.com/skills-personal/](http://dkritarth.com/skills-personal/).
+
+## Developer workflow skills
+
+- **file-pr**: Prepare concise pull requests with a clear title, description, and reviewable diff.
+- **council**: Gather independent model feedback for reviews and other requests.
+- **leaving-pr-comments**: Format, check, and verify agent-authored GitHub PR comments.
+- **technical-writing**: Write and review clear technical documentation, RFCs, READMEs, PR descriptions, and commit messages.
